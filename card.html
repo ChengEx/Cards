@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>翻牌小遊戲</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #card {
+            width: 500px;
+            height: 500px;
+            margin: 0px auto;
+        }
+
+        .col-3 {
+            width: 80px;
+            height: 178px;
+        }
+
+        img {
+            width: 80px;
+            height: 100%;
+        }
+
+        #bbb {
+            margin: 10px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div id="card" class="row mt-5">
+
+        </div>
+        <div class="row">
+            <button type="button" id="bbb" class="btn btn-primary btn-lg">洗牌</button>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+            start();
+            var arr_4 = new Array()
+            $("#bbb").on("click", function () {
+                arr_4.splice(0, arr_4.length);
+                function getRandom(min, max) {
+                    var random = Math.random() * (max - min) + min;
+
+                    random = Math.floor(random);
+
+                    if (arr_4.length < 8) {
+                        for (i = 0; i <= arr_4.length; i++) {
+                            if (random == arr_4[i]) {
+                                break;
+                            }
+                            else {
+                                if (i == arr_4.length) {
+                                    arr_4.push(random);
+                                    break;
+                                }
+                            }
+                        };
+                        getRandom(0, 8);
+                    }
+                }
+                getRandom(0, 8);
+                console.info(arr_4);
+
+                $("#card").html("");
+                start();
+            })
+            function start() {
+                var fff = 0;
+                var a = 0;
+                var time = 0;
+                var check1 = 0;
+                var check2 = 0;
+                var test = 0;
+                var arr = [];
+                var arrAttr = [];
+
+                var c = 0, d = 0, e = 0, f = 0;
+                for (var i = 0; i < 8; i++) {
+                    $("#card").append("<div class='col-3' id='" + i + "'></div > ")
+                    $("#" + i).css("background-image", " url(image/th.jpg)").css("background-size", "100%");
+                }
+                $(".col-3").on("click", abc);
+                function abc() {
+                    var bbb = $(this);
+                    time += 1;
+                    if (time == 1) {
+                        a = $(this).attr("id");
+                        console.info(a);
+                        arrAttr.push(a);
+                        if (arr_4[0] == a || arr_4[1] == a) {
+                            $(this).css("background-image", " url(image/th1.jpg)");
+                            $(this).addClass("th1");
+                            c = 1;
+                            arr.push(a);
+                        }
+                        else if (arr_4[2] == a || arr_4[3] == a) {
+                            $(this).css("background-image", " url(image/th2.jpg)");
+                            $(this).addClass("th2");
+                            d = 1;
+                            arr.push(a);
+                        }
+                        else if (arr_4[4] == a || arr_4[5] == a) {
+                            $(this).css("background-image", " url(image/th3.jpg)");
+                            $(this).addClass("th3");
+                            e = 1;
+                            arr.push(a);
+
+                        }
+                        else if (arr_4[6] == a || arr_4[7] == a) {
+                            $(this).css("background-image", " url(image/th4.jpg)");
+                            $(this).addClass("th4");
+                            f = 1;
+                            arr.push(a);
+
+                        }
+                    }
+                    if (time == 2) {
+                        var ak = $(this);
+                        fff = $(this).attr("id");
+                        console.info(fff);
+                        if (arr_4[0] == fff || arr_4[1] == fff) {
+                            $(this).css("background-image", " url(image/th1.jpg)");
+                            $(this).addClass("th1");
+                            if ($("#" + arr[0]).hasClass("th1")) {
+                                if (a == fff) {
+                                    setTimeout(function () {
+                                        $("#" + arr[0]).removeClass("th1");
+                                        $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                        ak.removeClass("th1");
+                                        ak.css("background-image", " url(image/th.jpg)");
+                                        arr.pop();
+                                    }, 100)
+                                    //alert("11");
+                                    fff = "";
+                                } else {
+                                    //alert("1");
+                                    arr.pop();
+                                }
+                            } else {
+                                setTimeout(function () {
+                                    $("#" + arr[0]).removeClass("th1");
+                                    $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                    ak.removeClass("th1");
+                                    ak.css("background-image", " url(image/th.jpg)");
+                                    arr.pop();
+                                }, 1000)
+                            }
+                        }
+                        else if (arr_4[2] == fff || arr_4[3] == fff) {
+                            $(this).css("background-image", " url(image/th2.jpg)");
+                            $(this).addClass("th2");
+                            setTimeout(function () {       //-------------------------------------------------------------
+                                if ($("#" + arr[0]).hasClass("th2")) {
+                                    if (a == fff) {
+                                        setTimeout(function () {
+                                            $("#" + arr[0]).removeClass("th2");
+                                            $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                            ak.removeClass("th2");
+                                            ak.css("background-image", " url(image/th.jpg)");
+                                            arr.pop();
+                                        }, 100)
+                                        //alert("22");
+                                        fff = "";
+                                    } else {
+                                        //alert("2");
+                                        arr.pop();
+                                    }
+                                } else {
+                                    $("#" + arr[0]).removeClass("th2");
+                                    $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                    ak.removeClass("th2");
+                                    ak.css("background-image", " url(image/th.jpg)");
+                                    arr.pop();
+                                }
+                            }, 1000)
+                        }
+                        else if (arr_4[4] == fff || arr_4[5] == fff) {
+                            $(this).css("background-image", " url(image/th3.jpg)");
+                            $(this).addClass("th3");
+                            setTimeout(function () {
+                                if ($("#" + arr[0]).hasClass("th3")) {        //-------------------------------------------------------------
+                                    if (a == fff) {
+                                        setTimeout(function () {
+                                            $("#" + arr[0]).removeClass("th3");
+                                            $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                            ak.removeClass("th3");
+                                            ak.css("background-image", " url(image/th.jpg)");
+                                            arr.pop();
+                                        }, 100)
+                                        //alert("33");
+                                        fff = "";
+                                    } else {
+                                        //alert("3");
+                                        arr.pop();
+                                    }
+                                } else {
+                                    $("#" + arr[0]).removeClass("th3");
+                                    $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                    ak.removeClass("th3");
+                                    ak.css("background-image", " url(image/th.jpg)");
+                                    arr.pop();
+                                }
+                            }, 1000)
+                        }
+                        else if (arr_4[6] == fff || arr_4[7] == fff) {
+                            $(this).css("background-image", " url(image/th4.jpg)");
+                            $(this).addClass("th4");
+                            setTimeout(function () {
+                                if ($("#" + arr[0]).hasClass("th4")) {  //-------------------------------------------------------------
+                                    if (a == fff) {
+                                        setTimeout(function () {
+                                            $("#" + arr[0]).removeClass("th4");
+                                            $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                            ak.removeClass("th4");
+                                            ak.css("background-image", " url(image/th.jpg)");
+                                            arr.pop();
+                                        }, 100)
+                                        //alert("44");
+                                        fff = "";
+                                    } else {
+                                        //alert("4");
+                                        arr.pop();
+                                    }
+                                } else {
+                                    $("#" + arr[0]).removeClass("th4");
+                                    $("#" + arr[0]).css("background-image", " url(image/th.jpg)");
+                                    ak.removeClass("th4");
+                                    ak.css("background-image", " url(image/th.jpg)");
+                                    arr.pop();
+                                }
+                            }, 1000)
+                        }                      
+                        time = 0;
+                        arrAttr.pop();
+                    }                  
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
